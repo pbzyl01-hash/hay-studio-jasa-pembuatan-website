@@ -4,8 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Hay Studio - Jasa Pembuatan Web Apps</title>
-  <link rel="icon" type="image/png" href="favicon.png">
-<head>
+  <link class="rounded-full" rel="icon" type="image/png" href="favicon.png">
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Google Fonts & Font Awesome Icons -->
@@ -258,7 +257,7 @@
 
         <!-- Layanan 2: Company Profile -->
         <div class="p-8 rounded-3xl bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800/80 transition-all hover:shadow-xl hover:border-purple-500/30 group">
-          <div class="w-12 h-12 rounded-2xl bg-purple-500/10 text-purple-600 dark:text-purple-400 flex items-center justify-center text-xl font-bold mb-6 group-hover:scale-110 transition-transform">
+          <div class="w-12 h-12 rounded-2xl bg-purple-500/10 text-purple-650 flex items-center justify-center text-xl font-bold mb-6 group-hover:scale-110 transition-transform">
             <i class="fa-solid fa-briefcase"></i>
           </div>
           <h3 class="text-xl font-bold mb-3 text-slate-900 dark:text-white">Company Profile</h3>
@@ -527,8 +526,8 @@
   <footer class="bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 py-8 transition-colors duration-300">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
       <div class="flex items-center space-x-2">
-        <div class="h-8 w-8 bg-indigo-600 rounded-lg flex items-center justify-center text-white font-black text-sm">
-          H
+        <div id="container-logo-footer" class="h-8 w-8 overflow-hidden bg-indigo-600 rounded-lg flex items-center justify-center text-white font-black text-sm">
+          <span id="text-logo-footer-fallback">H</span>
         </div>
         <span class="font-bold tracking-tight bg-gradient-to-r from-indigo-600 to-purple-600 dark:from-indigo-400 dark:to-purple-400 bg-clip-text text-transparent">
           HAY STUDIO
@@ -770,6 +769,38 @@
     let logoBase64Upload = null;
     window.appSettings = {};
 
+    // ----------------------------------------------------
+    // MANAJEMEN TEMA (TERANG/GELAP)
+    // ----------------------------------------------------
+    function inisialisasiTema() {
+      const themeToggleBtn = document.getElementById('theme-toggle');
+      const themeIcon = document.getElementById('theme-icon');
+      
+      // Ambil preferensi tema dari local storage atau preferensi sistem
+      if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        document.documentElement.classList.add('dark');
+        if (themeIcon) themeIcon.className = 'fa-solid fa-sun text-lg text-amber-400';
+      } else {
+        document.documentElement.classList.remove('dark');
+        if (themeIcon) themeIcon.className = 'fa-solid fa-moon text-lg text-slate-700';
+      }
+
+      // Pasang Event Listener Klik Toggle Tema
+      if (themeToggleBtn) {
+        themeToggleBtn.addEventListener('click', function() {
+          if (document.documentElement.classList.contains('dark')) {
+            document.documentElement.classList.remove('dark');
+            localStorage.setItem('color-theme', 'light');
+            if (themeIcon) themeIcon.className = 'fa-solid fa-moon text-lg text-slate-700';
+          } else {
+            document.documentElement.classList.add('dark');
+            localStorage.setItem('color-theme', 'dark');
+            if (themeIcon) themeIcon.className = 'fa-solid fa-sun text-lg text-amber-400';
+          }
+        });
+      }
+    }
+
     // INJEKSI AMAN DARI GOOGLE APPS SCRIPT DAN FALLBACK MODE PREVIEW
     function inisialisasiPengaturanLokal() {
       const fallbackSettings = {
@@ -895,12 +926,23 @@
       if (linkEmail) linkEmail.href = `mailto:${s.EMAIL_ADDRESS}`;
       if (labelEmail) labelEmail.innerText = s.EMAIL_ADDRESS;
 
+      // Header Logo
       const containerLogo = document.getElementById('container-logo');
       if (containerLogo) {
         if (s.LOGO_BASE64 && s.LOGO_BASE64.trim() !== "") {
           containerLogo.innerHTML = `<img src="${s.LOGO_BASE64}" alt="Logo" class="h-full w-full object-cover">`;
         } else {
           containerLogo.innerHTML = `<span id="text-logo-fallback">H</span>`;
+        }
+      }
+
+      // Footer Logo
+      const containerLogoFooter = document.getElementById('container-logo-footer');
+      if (containerLogoFooter) {
+        if (s.LOGO_BASE64 && s.LOGO_BASE64.trim() !== "") {
+          containerLogoFooter.innerHTML = `<img src="${s.LOGO_BASE64}" alt="Logo" class="h-full w-full object-cover">`;
+        } else {
+          containerLogoFooter.innerHTML = `<span id="text-logo-footer-fallback">H</span>`;
         }
       }
     }
@@ -969,6 +1011,14 @@
     const erasingSpeed = 75;
     const delayBetweenWords = 2000;
     const rotatingWordEl = document.getElementById('rotating-word');
+
+    // Mencegah konflik eksekusi ganda jika dipanggil berulang
+    let isTypingStarted = false;
+    function startTypeEffect() {
+      if (isTypingStarted) return;
+      isTypingStarted = true;
+      typeEffect();
+    }
 
     function typeEffect() {
       if (!rotatingWordEl) return;
@@ -1097,17 +1147,21 @@
     // ----------------------------------------------------
     // PANEL AKSES ADMIN & DASHBOARD CONTROL
     // ----------------------------------------------------
+    const modalLogin = document.getElementById('modal-login');
+    const modalDashboard = document.getElementById('modal-dashboard');
+    const inputPin = document.getElementById('input-pin');
+    const eyeIcon = document.getElementById('eye-icon');
+    const btnSubmitLogin = document.getElementById('btn-submit-login');
+    const errorAlert = document.getElementById('login-error-alert');
     let pinAksesTerakhir = ''; 
 
     function bukaModalLogin() {
-      const modal = document.getElementById('modal-login');
-      if (modal) modal.classList.remove('hidden');
+      if (modalLogin) modalLogin.classList.remove('hidden');
       document.body.classList.add('overflow-hidden');
     }
 
     function tutupModalLogin() {
-      const modal = document.getElementById('modal-login');
-      if (modal) modal.classList.add('hidden');
+      if (modalLogin) modalLogin.classList.add('hidden');
       document.body.classList.remove('overflow-hidden');
       const errEl = document.getElementById('login-error-alert');
       if (errEl) errEl.classList.add('hidden');
@@ -1116,8 +1170,7 @@
     }
 
     function tutupModalDashboard() {
-      const modal = document.getElementById('modal-dashboard');
-      if (modal) modal.classList.add('hidden');
+      if (modalDashboard) modalDashboard.classList.add('hidden');
       document.body.classList.remove('overflow-hidden');
     }
 
@@ -1146,8 +1199,6 @@
       if (!inputPin) return;
       
       const pinValue = inputPin.value;
-      const btnSubmitLogin = document.getElementById('btn-submit-login');
-      const errorAlert = document.getElementById('login-error-alert');
 
       if (errorAlert) errorAlert.classList.add('hidden');
       if (btnSubmitLogin) {
@@ -1246,7 +1297,6 @@
       }
       
       switchDashboardTab('orders');
-      const modalDashboard = document.getElementById('modal-dashboard');
       if (modalDashboard) modalDashboard.classList.remove('hidden');
       document.body.classList.add('overflow-hidden');
     }
@@ -1458,9 +1508,16 @@
     // ----------------------------------------------------
     // MENJALANKAN FUNGSI AWAL SETELAH CAROUSEL LOAD
     // ----------------------------------------------------
+    // Panggil instan untuk pre-render secepat mungkin (menghindari delay kedipan logo "H")
+    inisialisasiPengaturanLokal();
+
     document.addEventListener("DOMContentLoaded", () => {
-      setTimeout(typeEffect, 1000);
-      inisialisasiPengaturanLokal();
+      // Inisialisasi tema mode gelap dan terang
+      inisialisasiTema();
+      // Jalankan animasi ketikan
+      startTypeEffect();
+      // Panggil ulang setelah DOM siap untuk mematangkan render semua elemen dinamis
+      applyDinamisSettings();
     });
   </script>
 <script type="text/javascript">
