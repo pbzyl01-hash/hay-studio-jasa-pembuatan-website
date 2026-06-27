@@ -661,8 +661,8 @@
             <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Sistem sinkronisasi asinkronus terhubung ke Google Sheets Database</p>
           </div>
           <div class="flex items-center space-x-3">
-            <button onclick="refreshDashboard()" class="p-2 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 rounded-xl text-slate-600 dark:text-slate-300 text-sm transition-all flex items-center gap-1.5">
-              <i class="fa-solid fa-rotate"></i>
+            <button onclick="refreshDashboard()" class="p-2 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 rounded-xl text-slate-600 dark:text-slate-300 text-sm transition-all flex items-center gap-1.5 animate-none">
+              <i id="icon-refresh-dashboard" class="fa-solid fa-rotate"></i>
               <span>Refresh</span>
             </button>
             <button onclick="tutupModalDashboard()" class="p-2 bg-rose-500/10 text-rose-600 hover:bg-rose-500/20 rounded-xl text-sm transition-all flex items-center gap-1.5">
@@ -721,7 +721,7 @@
                 <!-- Email Setting -->
                 <div>
                   <label class="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-2">Alamat Email Resmi</label>
-                  <input type="email" id="set-email" required class="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm text-slate-900 dark:text-white font-semibold" placeholder="halo@haystudio.com">
+                  <input type="email" id="set-email" required class="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-white dark:text-slate-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm text-slate-900 font-semibold" placeholder="halo@haystudio.com">
                 </div>
               </div>
 
@@ -762,8 +762,7 @@
     // CONFIGURASI ENDPOINT GOOGLE APPS SCRIPT (GAS_URL)
     // =========================================================================
     // Salin Tautan URL Web App Google Apps Script Anda setelah "Deploy" -> "New Deployment"
-    // Contoh: const GAS_URL = "https://script.google.com/macros/s/AKfycb...dst/exec";
-    // Jika Anda menjalankan halaman ini LANGSUNG di dalam Google Apps Script (doGet), kosongkan saja ("").
+    // URL di bawah ini terhubung ke Spreadsheet Anda secara langsung.
     const GAS_URL = "https://script.google.com/macros/s/AKfycbxNBtsuJ7eUxVJTVQBHu9V-GXk4ihfavuOxsb_-akS034cKpxzzVfdOLB54QztNfj-c1g/exec"; 
 
     let logoBase64Upload = null;
@@ -924,32 +923,6 @@
       }
       return cleaned;
     }
-
-    // ----------------------------------------------------
-    // THEME TOGGLE
-    // ----------------------------------------------------
-    const themeToggleBtn = document.getElementById('theme-toggle');
-    const themeIcon = document.getElementById('theme-icon');
-
-    if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-      document.documentElement.classList.add('dark');
-      themeIcon.className = 'fa-solid fa-sun text-lg';
-    } else {
-      document.documentElement.classList.remove('dark');
-      themeIcon.className = 'fa-solid fa-moon text-lg';
-    }
-
-    themeToggleBtn.addEventListener('click', function() {
-      if (document.documentElement.classList.contains('dark')) {
-        document.documentElement.classList.remove('dark');
-        localStorage.setItem('color-theme', 'light');
-        themeIcon.className = 'fa-solid fa-moon text-lg';
-      } else {
-        document.documentElement.classList.add('dark');
-        localStorage.setItem('color-theme', 'dark');
-        themeIcon.className = 'fa-solid fa-sun text-lg';
-      }
-    });
 
     // ----------------------------------------------------
     // WIDGET HARI, TANGGAL, DAN JAM REAL-TIME
@@ -1122,26 +1095,33 @@
     // ----------------------------------------------------
     // PANEL AKSES ADMIN & DASHBOARD CONTROL
     // ----------------------------------------------------
-    const modalLogin = document.getElementById('modal-login');
-    const modalDashboard = document.getElementById('modal-dashboard');
-    const inputPin = document.getElementById('input-pin');
-    const eyeIcon = document.getElementById('eye-icon');
     let pinAksesTerakhir = ''; 
 
     function bukaModalLogin() {
-      if (modalLogin) modalLogin.classList.remove('hidden');
+      const modal = document.getElementById('modal-login');
+      if (modal) modal.classList.remove('hidden');
       document.body.classList.add('overflow-hidden');
     }
 
     function tutupModalLogin() {
-      if (modalLogin) modalLogin.classList.add('hidden');
+      const modal = document.getElementById('modal-login');
+      if (modal) modal.classList.add('hidden');
       document.body.classList.remove('overflow-hidden');
       const errEl = document.getElementById('login-error-alert');
       if (errEl) errEl.classList.add('hidden');
+      const inputPin = document.getElementById('input-pin');
       if (inputPin) inputPin.value = '';
     }
 
+    function tutupModalDashboard() {
+      const modal = document.getElementById('modal-dashboard');
+      if (modal) modal.classList.add('hidden');
+      document.body.classList.remove('overflow-hidden');
+    }
+
     function togglePasswordEye() {
+      const inputPin = document.getElementById('input-pin');
+      const eyeIcon = document.getElementById('eye-icon');
       if (!inputPin) return;
       if (inputPin.type === "password") {
         inputPin.type = "text";
@@ -1160,6 +1140,7 @@
 
     function handleLoginSubmit(event) {
       event.preventDefault();
+      const inputPin = document.getElementById('input-pin');
       if (!inputPin) return;
       
       const pinValue = inputPin.value;
@@ -1263,6 +1244,7 @@
       }
       
       switchDashboardTab('orders');
+      const modalDashboard = document.getElementById('modal-dashboard');
       if (modalDashboard) modalDashboard.classList.remove('hidden');
       document.body.classList.add('overflow-hidden');
     }
@@ -1289,17 +1271,60 @@
     }
 
     function refreshDashboard() {
-      if (!pinAksesTerakhir) return;
+      // Pastikan pinAksesTerakhir diselamatkan dari kolom input jika kosong
+      if (!pinAksesTerakhir) {
+        const inputPin = document.getElementById('input-pin');
+        if (inputPin && inputPin.value) {
+          pinAksesTerakhir = inputPin.value;
+        }
+      }
+
+      if (!pinAksesTerakhir) {
+        tutupModalDashboard();
+        bukaModalLogin();
+        return;
+      }
+      
+      // Berikan efek putar loading di ikon refresh
+      const iconRefresh = document.getElementById('icon-refresh-dashboard');
+      if (iconRefresh) iconRefresh.classList.add('fa-spin');
+
+      // Tampilkan loader asinkronus interaktif di dalam tabel body saat fetch data
+      const tbody = document.getElementById('tabel-pesanan-body');
+      if (tbody) {
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="6" class="px-6 py-12 text-center text-slate-400 dark:text-slate-500">
+              <i class="fa-solid fa-spinner animate-spin text-3xl mb-2 block text-indigo-500"></i>
+              Menyegarkan data secara asinkronus dari Google Sheets...
+            </td>
+          </tr>
+        `;
+      }
       
       routerApi("verifikasiAkses", pinAksesTerakhir)
         .then(response => {
+          if (iconRefresh) iconRefresh.classList.remove('fa-spin');
           if (response.success) {
             window.appSettings = response.settings;
             applyDinamisSettings();
             tampilkanDashboard(response.data, response.settings);
           }
         })
-        .catch(err => console.error("Refresh dashboard gagal:", err));
+        .catch(err => {
+          if (iconRefresh) iconRefresh.classList.remove('fa-spin');
+          console.error("Refresh dashboard gagal:", err);
+          if (tbody) {
+            tbody.innerHTML = `
+              <tr>
+                <td colspan="6" class="px-6 py-12 text-center text-rose-500">
+                  <i class="fa-solid fa-triangle-exclamation text-3xl mb-2 block text-rose-500"></i>
+                  Gagal memperbarui data dari Google Sheets harian. Silakan coba lagi.
+                </td>
+              </tr>
+            `;
+          }
+        });
     }
 
     // ----------------------------------------------------
