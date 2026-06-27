@@ -1324,15 +1324,49 @@
     // ----------------------------------------------------
     function previewSelectedLogo(input) {
       if (input.files && input.files[0]) {
+        const file = input.files[0];
         const reader = new FileReader();
+        
         reader.onload = function(e) {
-          logoBase64Upload = e.target.result;
-          const preview = document.getElementById('preview-logo-admin');
-          if (preview) {
-            preview.innerHTML = `<img src="${logoBase64Upload}" class="h-full w-full object-cover">`;
-          }
+          const img = new Image();
+          img.onload = function() {
+            // Target dimensi maksimal untuk logo (sangat optimal untuk ukuran navbar)
+            const maxDimension = 150; 
+            let width = img.width;
+            let height = img.height;
+            
+            // Hitung ulang dimensi dengan mempertahankan rasio aspek gambar (Aspect Ratio)
+            if (width > height) {
+              if (width > maxDimension) {
+                height = Math.round((height * maxDimension) / width);
+                width = maxDimension;
+              }
+            } else {
+              if (height > maxDimension) {
+                width = Math.round((width * maxDimension) / height);
+                height = maxDimension;
+              }
+            }
+            
+            // Gambar ulang pada Canvas untuk proses kompresi
+            const canvas = document.createElement('canvas');
+            canvas.width = width;
+            canvas.height = height;
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(img, 0, 0, width, height);
+            
+            // Konversi ke JPEG dengan kompresi kualitas 0.7 (Hasil sangat ringan & di bawah limit sel Google Sheets)
+            logoBase64Upload = canvas.toDataURL('image/jpeg', 0.7);
+            
+            // Tampilkan preview logo yang telah dikompresi di Panel Admin
+            const preview = document.getElementById('preview-logo-admin');
+            if (preview) {
+              preview.innerHTML = `<img src="${logoBase64Upload}" class="h-full w-full object-cover">`;
+            }
+          };
+          img.src = e.target.result;
         };
-        reader.readAsDataURL(input.files[0]);
+        reader.readAsDataURL(file);
       }
     }
 
