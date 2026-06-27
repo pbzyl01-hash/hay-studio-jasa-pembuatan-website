@@ -1,0 +1,1421 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hay Studio - Jasa Pembuatan Website Profesional</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts & Font Awesome Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght=300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Plus Jakarta Sans', 'sans-serif'],
+          },
+          animation: {
+            'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+          }
+        }
+      }
+    }
+  </script>
+  
+  <style>
+    /* Animasi Judul Menyala & Berdenyut (Glowing & Pulsing) */
+    @keyframes glow-pulse {
+      0%, 100% {
+        text-shadow: 0 0 10px rgba(99, 102, 241, 0.6), 0 0 20px rgba(99, 102, 241, 0.4), 0 0 30px rgba(168, 85, 247, 0.4);
+        transform: scale(1);
+      }
+      50% {
+        text-shadow: 0 0 20px rgba(99, 102, 241, 0.9), 0 0 30px rgba(168, 85, 247, 0.8), 0 0 40px rgba(168, 85, 247, 0.6);
+        transform: scale(1.03);
+      }
+    }
+    .glow-pulse-text {
+      animation: glow-pulse 3s infinite ease-in-out;
+    }
+    
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    .dark ::-webkit-scrollbar-thumb {
+      background: #374151;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #E5E7EB;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100 min-h-screen transition-colors duration-300 font-sans">
+
+  <!-- ELEMEN INI MENJAMIN KESELAMATAN APLIKASI DARI SYNTAXERROR DI LINGKUNGAN PRATINJAU -->
+  <script type="application/json" id="gas-raw-settings">
+    <?!= typeof settings !== 'undefined' ? settings : '{"WA_NUMBER":"081234567890","EMAIL_ADDRESS":"halo@haystudio.com","LOGO_BASE64":""}' ?>
+  </script>
+
+  <!-- HEADER & NAVIGATION TABS -->
+  <div class="bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 sticky top-0 z-40 transition-colors duration-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      
+      <!-- Logo & Nama Brand -->
+      <div class="flex items-center space-x-2">
+        <div id="container-logo" class="h-10 w-10 overflow-hidden bg-gradient-to-tr from-indigo-600 to-purple-600 rounded-xl flex items-center justify-center text-white font-black text-xl shadow-md shadow-indigo-500/20">
+          <span id="text-logo-fallback">H</span>
+        </div>
+        <span class="font-extrabold text-xl tracking-tight bg-gradient-to-r from-indigo-600 to-purple-600 dark:from-indigo-400 dark:to-purple-400 bg-clip-text text-transparent">
+          HAY STUDIO
+        </span>
+      </div>
+
+      <!-- Navigation Tabs (Desktop) -->
+      <nav class="hidden md:flex space-x-1 bg-slate-100 dark:bg-slate-800/60 p-1 rounded-xl border border-slate-200/50 dark:border-slate-700/50">
+        <a href="#beranda" class="nav-tab px-4 py-1.5 text-sm font-semibold rounded-lg text-slate-700 dark:text-slate-300 hover:bg-white dark:hover:bg-slate-800 transition-all">Beranda</a>
+        <a href="#fitur" class="nav-tab px-4 py-1.5 text-sm font-semibold rounded-lg text-slate-700 dark:text-slate-300 hover:bg-white dark:hover:bg-slate-800 transition-all">Fitur</a>
+        <a href="#layanan" class="nav-tab px-4 py-1.5 text-sm font-semibold rounded-lg text-slate-700 dark:text-slate-300 hover:bg-white dark:hover:bg-slate-800 transition-all">Layanan</a>
+        <a href="#harga" class="nav-tab px-4 py-1.5 text-sm font-semibold rounded-lg text-slate-700 dark:text-slate-300 hover:bg-white dark:hover:bg-slate-800 transition-all">Paket Harga</a>
+        <a href="#hubungi" class="nav-tab px-4 py-1.5 text-sm font-semibold rounded-lg text-slate-700 dark:text-slate-300 hover:bg-white dark:hover:bg-slate-800 transition-all">Hubungi</a>
+      </nav>
+
+      <!-- Controls (Theme Toggle & Login Akses) -->
+      <div class="flex items-center space-x-3">
+        <!-- Theme Toggle -->
+        <button id="theme-toggle" class="p-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 transition-all focus:outline-none focus:ring-2 focus:ring-indigo-500" title="Ubah Tema">
+          <i id="theme-icon" class="fa-solid fa-moon text-lg"></i>
+        </button>
+
+        <!-- Admin Login Button -->
+        <button onclick="bukaModalLogin()" class="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 dark:bg-indigo-500 dark:hover:bg-indigo-600 text-white text-sm font-semibold shadow-md shadow-indigo-500/10 transition-all flex items-center space-x-2">
+          <i class="fa-solid fa-lock-open"></i>
+          <span class="hidden sm:inline">Akses Admin</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile Header Tab Navigator -->
+  <div class="md:hidden bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 py-2 px-4 flex justify-around text-xs font-bold sticky top-16 z-30 shadow-sm">
+    <a href="#beranda" class="text-slate-600 dark:text-slate-400 hover:text-indigo-500 py-1 px-2 rounded-lg">Beranda</a>
+    <a href="#fitur" class="text-slate-600 dark:text-slate-400 hover:text-indigo-500 py-1 px-2 rounded-lg">Fitur</a>
+    <a href="#layanan" class="text-slate-600 dark:text-slate-400 hover:text-indigo-500 py-1 px-2 rounded-lg">Layanan</a>
+    <a href="#harga" class="text-slate-600 dark:text-slate-400 hover:text-indigo-500 py-1 px-2 rounded-lg">Harga</a>
+    <a href="#hubungi" class="text-slate-600 dark:text-slate-400 hover:text-indigo-500 py-1 px-2 rounded-lg">Hubungi</a>
+  </div>
+
+  <!-- HERO SECTION -->
+  <section id="beranda" class="relative overflow-hidden pt-12 pb-20 lg:pt-20 lg:pb-32 bg-gradient-to-b from-indigo-50/50 via-transparent to-transparent dark:from-slate-900/40">
+    <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-indigo-300/10 via-transparent to-transparent dark:from-indigo-900/10 pointer-events-none"></div>
+    
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+      
+      <!-- Real-time Clock Widget -->
+      <div class="inline-flex items-center space-x-2 text-xs sm:text-sm font-semibold text-slate-600 dark:text-slate-400 bg-white dark:bg-slate-900 px-5 py-2.5 rounded-full shadow-sm mb-6 border border-slate-200/60 dark:border-slate-800">
+        <i class="fa-regular fa-calendar-days text-indigo-500"></i>
+        <span id="txt-hari-tanggal-hero">Memuat Hari...</span>
+        <span class="text-slate-300 dark:text-slate-700">|</span>
+        <i class="fa-regular fa-clock text-purple-500 animate-pulse"></i>
+        <span id="txt-jam-mobile">00:00:00</span>
+      </div>
+
+      <!-- Glowing Badge for UMKM and Gov Agencies -->
+      <span class="block w-fit mx-auto items-center space-x-2 px-4 py-1.5 rounded-full text-xs font-semibold bg-indigo-100 text-indigo-800 dark:bg-indigo-950/80 dark:text-indigo-300 border border-indigo-200/60 dark:border-indigo-900/50 mb-6 uppercase tracking-wider">
+        <span class="w-2 h-2 inline-block rounded-full bg-indigo-500 animate-pulse mr-1"></span>
+        <span>Solusi Digital Terpercaya untuk UMKM & Instansi Pemerintah</span>
+      </span>
+
+      <!-- GLOWING & PULSING TITLE WITH ROTATING WORDS -->
+      <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight mb-8">
+        Jasa Pembuatan Website dan <br class="hidden sm:inline"> Sistem Digital yang <br class="sm:hidden">
+        <span id="rotating-word-container" class="inline-block min-w-[180px] sm:min-w-[280px]">
+          <span id="rotating-word" class="inline-block glow-pulse-text bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 dark:from-indigo-400 dark:via-purple-400 dark:to-pink-400 bg-clip-text text-transparent py-2"></span><span class="animate-pulse text-indigo-500 dark:text-indigo-400 font-light">|</span>
+        </span>
+      </h1>
+
+      <p class="max-w-3xl mx-auto text-base sm:text-lg md:text-xl text-slate-600 dark:text-slate-400 mb-10 leading-relaxed">
+        Kami membantu kamu merancang dan mengembangkan website modern yang rapi, super cepat, dan mudah dikelola. Mulai dari landing page penjualan hingga sistem manajemen data internal otomatis.
+      </p>
+
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+        <a href="#hubungi" class="w-full sm:w-auto px-8 py-4 bg-gradient-to-r from-indigo-600 to-purple-600 dark:from-indigo-500 dark:to-purple-500 hover:from-indigo-700 hover:to-purple-700 text-white font-bold rounded-2xl shadow-xl shadow-indigo-500/25 dark:shadow-indigo-500/10 transform hover:-translate-y-0.5 transition-all text-center">
+          Mulai Konsultasi Gratis
+        </a>
+        <a href="#layanan" class="w-full sm:w-auto px-8 py-4 bg-white hover:bg-slate-100 dark:bg-slate-900 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-800 font-semibold rounded-2xl transition-all text-center">
+          Lihat Layanan Kami
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FITUR SECTION -->
+  <section id="fitur" class="py-20 bg-white dark:bg-slate-900 transition-colors duration-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-3xl mx-auto mb-16">
+        <h2 class="text-3xl md:text-4xl font-extrabold text-slate-900 dark:text-white">
+          Mengapa Memilih Hay Studio?
+        </h2>
+        <p class="mt-4 text-slate-600 dark:text-slate-400">
+          Kami memahami kamu memerlukan hasil terbaik yang langsung mendongkrak penjualan atau menyederhanakan tugas administrasi secara praktis.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <!-- Fitur 1 -->
+        <div class="p-8 rounded-3xl bg-slate-50 dark:bg-slate-950 border border-slate-100 dark:border-slate-800/80 transition-all hover:shadow-xl hover:border-indigo-500/30 group">
+          <div class="w-12 h-12 rounded-2xl bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 flex items-center justify-center text-xl font-bold mb-6 group-hover:scale-110 transition-transform">
+            <i class="fa-solid fa-bolt"></i>
+          </div>
+          <h3 class="text-xl font-bold mb-3 text-slate-900 dark:text-white">Performa Super Cepat</h3>
+          <p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">
+            Optimasi kode, gambar terkompresi, dan server terbaik menjamin website Anda dapat diakses tanpa hambatan dalam hitungan milidetik.
+          </p>
+        </div>
+
+        <!-- Fitur 2 -->
+        <div class="p-8 rounded-3xl bg-slate-50 dark:bg-slate-950 border border-slate-100 dark:border-slate-800/80 transition-all hover:shadow-xl hover:border-purple-500/30 group">
+          <div class="w-12 h-12 rounded-2xl bg-purple-500/10 text-purple-600 dark:text-purple-400 flex items-center justify-center text-xl font-bold mb-6 group-hover:scale-110 transition-transform">
+            <i class="fa-solid fa-mobile-screen-button"></i>
+          </div>
+          <h3 class="text-xl font-bold mb-3 text-slate-900 dark:text-white">Sangat Responsif</h3>
+          <p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">
+            Tampilan adaptif yang memanjakan mata di perangkat smartphone, tablet, laptop, hingga monitor desktop berukuran besar.
+          </p>
+        </div>
+
+        <!-- Fitur 3 -->
+        <div class="p-8 rounded-3xl bg-slate-50 dark:bg-slate-950 border border-slate-100 dark:border-slate-800/80 transition-all hover:shadow-xl hover:border-pink-500/30 group">
+          <div class="w-12 h-12 rounded-2xl bg-pink-500/10 text-pink-600 dark:text-pink-400 flex items-center justify-center text-xl font-bold mb-6 group-hover:scale-110 transition-transform">
+            <i class="fa-solid fa-magnifying-glass"></i>
+          </div>
+          <h3 class="text-xl font-bold mb-3 text-slate-900 dark:text-white">SEO & Google Ramah</h3>
+          <p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">
+            Struktur website mengikuti kaidah SEO terkini agar bisnis Anda mudah ditemukan pelanggan potensial di halaman pencarian Google.
+          </p>
+        </div>
+
+        <!-- Fitur 4 -->
+        <div class="p-8 rounded-3xl bg-slate-50 dark:bg-slate-950 border border-slate-100 dark:border-slate-800/80 transition-all hover:shadow-xl hover:border-indigo-500/30 group">
+          <div class="w-12 h-12 rounded-2xl bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 flex items-center justify-center text-xl font-bold mb-6 group-hover:scale-110 transition-transform">
+            <i class="fa-solid fa-diagram-project"></i>
+          </div>
+          <h3 class="text-xl font-bold mb-3 text-slate-900 dark:text-white">Otomatisasi Alur Bisnis</h3>
+          <p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">
+            Cukup beritahu kebutuhan alur bisnismu, tim analis kami akan merancang otomatisasi terpadu yang terkoneksi langsung dengan spreadsheet secara instan.
+          </p>
+        </div>
+
+        <!-- Fitur 5 -->
+        <div class="p-8 rounded-3xl bg-slate-50 dark:bg-slate-950 border border-slate-100 dark:border-slate-800/80 transition-all hover:shadow-xl hover:border-emerald-500/30 group md:col-span-2 lg:col-span-1">
+          <div class="w-12 h-12 rounded-2xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center text-xl font-bold mb-6 group-hover:scale-110 transition-transform">
+            <i class="fa-solid fa-database"></i>
+          </div>
+          <h3 class="text-xl font-bold mb-3 text-slate-900 dark:text-white">Database Spreadsheet Aman</h3>
+          <p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">
+            Kami memanfaatkan Google Spreadsheet sebagai database utama. Sistem ini menjamin website Anda jauh lebih aman dari serangan siber, stabil, dan sangat mudah dikelola mandiri secara real-time.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LAYANAN SECTION -->
+  <section id="layanan" class="py-20 bg-slate-50/50 dark:bg-slate-950/20 transition-colors duration-300 border-t border-b border-slate-200/50 dark:border-slate-800/50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-3xl mx-auto mb-16">
+        <span class="text-xs font-bold uppercase tracking-wider text-indigo-600 dark:text-indigo-400">Solusi Digital</span>
+        <h2 class="text-3xl md:text-4xl font-extrabold text-slate-900 dark:text-white mt-2">
+          Solusi Website & Sistem Untuk Usahamu
+        </h2>
+        <p class="mt-4 text-slate-600 dark:text-slate-400">
+          Pilih jenis solusi digital terbaik yang disesuaikan secara khusus demi meningkatkan efisiensi harian kamu.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <!-- Layanan 1: Landing Page Penjualan -->
+        <div class="p-8 rounded-3xl bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800/80 transition-all hover:shadow-xl hover:border-indigo-500/30 group">
+          <div class="w-12 h-12 rounded-2xl bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 flex items-center justify-center text-xl font-bold mb-6 group-hover:scale-110 transition-transform">
+            <i class="fa-solid fa-rocket animate-pulse-slow"></i>
+          </div>
+          <h3 class="text-xl font-bold mb-3 text-slate-900 dark:text-white">Landing Page Penjualan</h3>
+          <p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">
+            Halaman konversi tinggi, modern, dan cepat dimuat untuk mendongkrak penjualan produk atau jasa yang kamu miliki.
+          </p>
+        </div>
+
+        <!-- Layanan 2: Company Profile -->
+        <div class="p-8 rounded-3xl bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800/80 transition-all hover:shadow-xl hover:border-purple-500/30 group">
+          <div class="w-12 h-12 rounded-2xl bg-purple-500/10 text-purple-600 dark:text-purple-400 flex items-center justify-center text-xl font-bold mb-6 group-hover:scale-110 transition-transform">
+            <i class="fa-solid fa-briefcase"></i>
+          </div>
+          <h3 class="text-xl font-bold mb-3 text-slate-900 dark:text-white">Company Profile</h3>
+          <p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">
+            Profil usaha kamu yang elegan, informatif, tepercaya, dan terintegrasi langsung dengan kontak WhatsApp serta lokasi peta.
+          </p>
+        </div>
+
+        <!-- Layanan 3: Dashboard Data Internal -->
+        <div class="p-8 rounded-3xl bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800/80 transition-all hover:shadow-xl hover:border-pink-500/30 group">
+          <div class="w-12 h-12 rounded-2xl bg-pink-500/10 text-pink-600 dark:text-pink-400 flex items-center justify-center text-xl font-bold mb-6 group-hover:scale-110 transition-transform">
+            <i class="fa-solid fa-chart-line"></i>
+          </div>
+          <h3 class="text-xl font-bold mb-3 text-slate-900 dark:text-white">Dashboard Data Internal</h3>
+          <p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">
+            Sistem portal data internal yang fleksibel untuk mempermudah visualisasi dan pemantauan informasi komunitas atau yayasan.
+          </p>
+        </div>
+
+        <!-- Layanan 4: Sistem Inventaris Barang -->
+        <div class="p-8 rounded-3xl bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800/80 transition-all hover:shadow-xl hover:border-indigo-500/30 group">
+          <div class="w-12 h-12 rounded-2xl bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 flex items-center justify-center text-xl font-bold mb-6 group-hover:scale-110 transition-transform">
+            <i class="fa-solid fa-boxes-stacked"></i>
+          </div>
+          <h3 class="text-xl font-bold mb-3 text-slate-900 dark:text-white">Sistem Inventaris Barang</h3>
+          <p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">
+            Manajemen stok barang real-time yang ringkas dan ramah seluler untuk toko, gudang, maupun operasional bisnismu.
+          </p>
+        </div>
+
+        <!-- Layanan 5: Sistem Kasir & Keuangan -->
+        <div class="p-8 rounded-3xl bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800/80 transition-all hover:shadow-xl hover:border-emerald-500/30 group">
+          <div class="w-12 h-12 rounded-2xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center text-xl font-bold mb-6 group-hover:scale-110 transition-transform">
+            <i class="fa-solid fa-cash-register"></i>
+          </div>
+          <h3 class="text-xl font-bold mb-3 text-slate-900 dark:text-white">Sistem Kasir & Keuangan</h3>
+          <p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">
+            Pencatatan kas masuk-keluar digital, pembuatan struk otomatis, dan kalkulasi laporan laba rugi bulanan secara rapi.
+          </p>
+        </div>
+
+        <!-- Layanan 6: Sistem Absensi Kehadiran -->
+        <div class="p-8 rounded-3xl bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800/80 transition-all hover:shadow-xl hover:border-amber-500/30 group">
+          <div class="w-12 h-12 rounded-2xl bg-amber-500/10 text-amber-600 dark:text-amber-400 flex items-center justify-center text-xl font-bold mb-6 group-hover:scale-110 transition-transform">
+            <i class="fa-solid fa-qrcode"></i>
+          </div>
+          <h3 class="text-xl font-bold mb-3 text-slate-900 dark:text-white">Sistem Absensi Kehadiran</h3>
+          <p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">
+            Pencatatan kehadiran mandiri berbasis pelacakan lokasi GPS aman atau scan kode QR praktis dengan pelaporan otomatis.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PAKET HARGA SECTION -->
+  <section id="harga" class="py-20 bg-slate-100/60 dark:bg-slate-900/40 transition-colors duration-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-3xl mx-auto mb-16">
+        <span class="text-xs font-bold uppercase tracking-wider text-indigo-600 dark:text-indigo-400">Pilihan Paket Terbaik</span>
+        <h2 class="text-3xl md:text-4xl font-extrabold text-slate-900 dark:text-white mt-2">
+          Investasi Transparan untuk Hasil Maksimal
+        </h2>
+        <p class="mt-4 text-slate-600 dark:text-slate-400">
+          Pilih paket yang paling sesuai dengan kebutuhan bisnis atau instansi Anda. Tanpa biaya tersembunyi.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch">
+        
+        <!-- Paket 1: PAKET BASIC -->
+        <div class="bg-white dark:bg-slate-900 p-8 rounded-3xl border border-slate-200 dark:border-slate-800 flex flex-col justify-between transition-all hover:scale-[1.02] hover:shadow-lg">
+          <div>
+            <span class="text-xs font-bold tracking-widest text-indigo-600 dark:text-indigo-400 uppercase">PAKET BASIC</span>
+            <h3 class="text-2xl font-black text-slate-900 dark:text-white mt-1">Landing Page / Profil Kilat</h3>
+            <p class="text-slate-500 dark:text-slate-400 text-sm mt-2">Pilihan praktis untuk mempromosikan satu produk atau sekadar mengenalkan profil usahamu.</p>
+            
+            <div class="my-6">
+              <span class="text-sm font-bold text-slate-400">Biaya sekali bayar</span>
+              <div class="flex items-baseline text-slate-900 dark:text-white">
+                <span class="text-2xl font-semibold">Rp</span>
+                <span class="text-4xl font-extrabold tracking-tight">175K</span>
+                <span class="text-slate-400 ml-1 text-sm">/Selesai</span>
+              </div>
+            </div>
+
+            <ul class="space-y-3.5 border-t border-slate-100 dark:border-slate-800 pt-6 text-sm text-slate-600 dark:text-slate-300">
+              <li class="flex items-center gap-3"><i class="fa-solid fa-circle-check text-indigo-500"></i> 1 Halaman Utama Informatif</li>
+              <li class="flex items-center gap-3"><i class="fa-solid fa-circle-check text-indigo-500"></i> Desain Modern & Responsif HP</li>
+              <li class="flex items-center gap-3"><i class="fa-solid fa-circle-check text-indigo-500"></i> Integrasi 1 Tombol WhatsApp</li>
+              <li class="flex items-center gap-3"><i class="fa-solid fa-circle-check text-indigo-500"></i> Gratis Hosting Cloud Selamanya</li>
+              <li class="flex items-center gap-3"><i class="fa-solid fa-circle-check text-indigo-500"></i> Estimasi Pengerjaan: 1 - 2 Hari</li>
+            </ul>
+          </div>
+          <button onclick="pilihPaket('Landing Page', 'Landing Page / Profil Kilat')" class="w-full mt-8 py-3 bg-slate-100 hover:bg-indigo-600 dark:bg-slate-800 dark:hover:bg-indigo-500 text-slate-800 hover:text-white dark:text-slate-200 font-bold rounded-2xl transition-all">
+            Pilih Paket Ini
+          </button>
+        </div>
+
+        <!-- Paket 2: PAKET STANDARD -->
+        <div class="bg-gradient-to-b from-indigo-50 to-white dark:from-indigo-950/40 dark:to-slate-900 p-8 rounded-3xl border-2 border-indigo-500 flex flex-col justify-between transition-all hover:scale-[1.02] hover:shadow-2xl relative shadow-indigo-500/10">
+          <span class="absolute top-0 right-8 -translate-y-1/2 bg-indigo-600 text-white text-[10px] font-extrabold uppercase tracking-widest px-3 py-1 rounded-full shadow-md">Paling Populer</span>
+          
+          <div>
+            <span class="text-xs font-bold tracking-widest text-indigo-600 dark:text-indigo-400 uppercase">PAKET STANDARD</span>
+            <h3 class="text-2xl font-black text-slate-900 dark:text-white mt-1">Company Profile Lengkap</h3>
+            <p class="text-slate-500 dark:text-slate-400 text-sm mt-2">Sangat tepat untuk profil instansi, organisasi, yayasan, atau institusi sekolah.</p>
+            
+            <div class="my-6">
+              <span class="text-sm font-bold text-slate-400">Biaya sekali bayar</span>
+              <div class="flex items-baseline text-slate-900 dark:text-white">
+                <span class="text-2xl font-semibold">Rp</span>
+                <span class="text-4xl font-extrabold tracking-tight">250K</span>
+                <span class="text-slate-400 ml-1 text-sm">/Selesai</span>
+              </div>
+            </div>
+
+            <ul class="space-y-3.5 border-t border-slate-100 dark:border-slate-800/80 pt-6 text-sm text-slate-600 dark:text-slate-300">
+              <li class="flex items-center gap-3"><i class="fa-solid fa-circle-check text-indigo-500"></i> Hingga 5 Halaman Web Utama</li>
+              <li class="flex items-center gap-3"><i class="fa-solid fa-circle-check text-indigo-500"></i> Desain Kustom yang Elegan</li>
+              <li class="flex items-center gap-3"><i class="fa-solid fa-circle-check text-indigo-500"></i> Integrasi Google Maps Kantor</li>
+              <li class="flex items-center gap-3"><i class="fa-solid fa-circle-check text-indigo-500"></i> Formulir Kontak Standard</li>
+              <li class="flex items-center gap-3"><i class="fa-solid fa-circle-check text-indigo-500"></i> Estimasi Pengerjaan: 3 - 5 Hari</li>
+            </ul>
+          </div>
+          <button onclick="pilihPaket('Company Profile', 'Company Profile Lengkap')" class="w-full mt-8 py-3 bg-indigo-600 hover:bg-indigo-700 dark:bg-indigo-500 dark:hover:bg-indigo-600 text-white font-bold rounded-2xl transition-all shadow-lg shadow-indigo-500/25">
+            Pilih Paket Ini
+          </button>
+        </div>
+
+        <!-- Paket 3: PAKET ADVANCED -->
+        <div class="bg-white dark:bg-slate-900 p-8 rounded-3xl border border-slate-200 dark:border-slate-800 flex flex-col justify-between transition-all hover:scale-[1.02] hover:shadow-lg">
+          <div>
+            <span class="text-xs font-bold tracking-widest text-indigo-600 dark:text-indigo-400 uppercase">PAKET ADVANCED</span>
+            <h3 class="text-2xl font-black text-slate-900 dark:text-white mt-1">Custom Smart System</h3>
+            <p class="text-slate-500 dark:text-slate-400 text-sm mt-2">Khusus otomatisasi data kasir, stok gudang, absensi, atau sinkronisasi spreadsheet harian.</p>
+            
+            <div class="my-6">
+              <span class="text-sm font-bold text-slate-400">Biaya sekali bayar</span>
+              <div class="text-slate-400 text-xs font-semibold uppercase tracking-wider mb-0.5">Mulai dari</div>
+              <div class="flex items-baseline text-slate-900 dark:text-white">
+                <span class="text-2xl font-semibold">Rp</span>
+                <span class="text-4xl font-extrabold tracking-tight">350K</span>
+              </div>
+            </div>
+
+            <ul class="space-y-3.5 border-t border-slate-100 dark:border-slate-800 pt-6 text-sm text-slate-600 dark:text-slate-300">
+              <li class="flex items-center gap-3"><i class="fa-solid fa-circle-check text-indigo-500"></i> Semua Fitur Paket Standard</li>
+              <li class="flex items-center gap-3"><i class="fa-solid fa-circle-check text-indigo-500"></i> Merintis Manajemen Produk</li>
+              <li class="flex items-center gap-3"><i class="fa-solid fa-circle-check text-indigo-500"></i> Koneksi Input Otomatis Spreadsheet</li>
+              <li class="flex items-center gap-3"><i class="fa-solid fa-circle-check text-indigo-500"></i> Formulir Penyimpanan Dinamis</li>
+              <li class="flex items-center gap-3"><i class="fa-solid fa-circle-check text-indigo-500"></i> Pengerjaan: 5 - 10 Hari Kerja</li>
+            </ul>
+          </div>
+          <button onclick="pilihPaket('Smart System', 'Custom Smart System')" class="w-full mt-8 py-3 bg-slate-100 hover:bg-indigo-600 dark:bg-slate-800 dark:hover:bg-indigo-500 text-slate-800 hover:text-white dark:text-slate-200 font-bold rounded-2xl transition-all">
+            Pilih Paket Ini
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- FORMULIR PEMESANAN & KONTAK -->
+  <section id="hubungi" class="py-20 bg-slate-50 dark:bg-slate-950/60 transition-colors duration-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+        
+        <!-- Info Kontak Dinamis -->
+        <div class="lg:col-span-5 space-y-8">
+          <div>
+            <span class="text-xs font-bold uppercase tracking-wider text-indigo-600 dark:text-indigo-400">Hubungi Kami</span>
+            <h2 class="text-3xl md:text-4xl font-extrabold text-slate-900 dark:text-white mt-2">
+              Konsultasikan Proyek Website Impian Anda bersama Hay Studio
+            </h2>
+            <p class="mt-4 text-slate-600 dark:text-slate-400">
+              Isi formulir di samping untuk mengirim penawaran atau memesan jasa pembuatan website. Kami akan membalas via WhatsApp atau Email kurang dari 24 jam.
+            </p>
+          </div>
+
+          <div class="space-y-4">
+            <!-- WA Link Dinamis -->
+            <a id="link-wa-studio" href="https://wa.me/6281234567890" target="_blank" class="block group">
+              <div class="flex items-center space-x-4 p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800/80 group-hover:border-green-500/50 transition-all">
+                <div class="w-10 h-10 rounded-xl bg-green-500/10 text-green-600 flex items-center justify-center text-lg group-hover:scale-110 transition-transform">
+                  <i class="fa-brands fa-whatsapp"></i>
+                </div>
+                <div>
+                  <p class="text-xs text-slate-400">WhatsApp Fast Respon</p>
+                  <p id="label-wa-studio" class="text-sm font-bold text-slate-900 dark:text-white">0812-3456-7890</p>
+                </div>
+              </div>
+            </a>
+
+            <!-- Email Link Dinamis -->
+            <a id="link-email-studio" href="mailto:halo@haystudio.com" class="block group">
+              <div class="flex items-center space-x-4 p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800/80 group-hover:border-indigo-500/50 transition-all">
+                <div class="w-10 h-10 rounded-xl bg-blue-500/10 text-blue-600 flex items-center justify-center text-lg group-hover:scale-110 transition-transform">
+                  <i class="fa-regular fa-envelope"></i>
+                </div>
+                <div>
+                  <p class="text-xs text-slate-400">Kirim Email Resmi</p>
+                  <p id="label-email-studio" class="text-sm font-bold text-slate-900 dark:text-white">halo@haystudio.com</p>
+                </div>
+              </div>
+            </a>
+          </div>
+        </div>
+
+        <!-- Form Pemesanan -->
+        <div class="lg:col-span-7">
+          <div class="bg-white dark:bg-slate-900 p-8 sm:p-10 rounded-3xl border border-slate-100 dark:border-slate-800 shadow-xl shadow-slate-100/40 dark:shadow-none">
+            <h3 class="text-xl font-bold mb-6 text-slate-900 dark:text-white flex items-center gap-2">
+              <i class="fa-solid fa-paper-plane text-indigo-500"></i>
+              Formulir Pengajuan Pembuatan Website
+            </h3>
+
+            <form id="form-pesanan" onsubmit="handleFormSubmit(event)" class="space-y-5">
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                <div>
+                  <label class="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-2">Nama Lengkap</label>
+                  <input type="text" name="nama" required class="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-950 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-colors text-sm text-slate-900 dark:text-white" placeholder="Contoh: Budi Santoso">
+                </div>
+                <div>
+                  <label class="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-2">Alamat Email</label>
+                  <input type="email" name="email" required class="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-950 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-colors text-sm text-slate-900 dark:text-white" placeholder="budi@email.com">
+                </div>
+              </div>
+
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                <div>
+                  <label class="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-2">No. WhatsApp Aktif</label>
+                  <input type="tel" name="whatsapp" required class="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-950 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-colors text-sm" placeholder="Contoh: 08123456789">
+                </div>
+                <div>
+                  <label class="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-2">Tipe Website</label>
+                  <select id="select-tipe-web" name="tipeWeb" required class="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-950 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-colors text-sm text-slate-900 dark:text-white">
+                    <option value="Landing Page">Landing Page / Profil Kilat</option>
+                    <option value="Company Profile">Company Profile Lengkap</option>
+                    <option value="Smart System">Custom Smart System</option>
+                  </select>
+                </div>
+              </div>
+
+              <div>
+                <label class="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-2">Catatan / Detail Kebutuhan</label>
+                <textarea name="pesan" rows="4" required class="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-950 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-colors text-sm text-slate-900 dark:text-white" placeholder="Jelaskan kebutuhan bisnis atau inspirasi desain website yang Anda inginkan..."></textarea>
+              </div>
+
+              <button type="submit" id="btn-submit-pesanan" class="w-full py-4 bg-indigo-600 hover:bg-indigo-700 dark:bg-indigo-500 dark:hover:bg-indigo-600 text-white font-bold rounded-xl shadow-lg shadow-indigo-500/10 transition-all flex items-center justify-center space-x-2">
+                <i class="fa-regular fa-paper-plane"></i>
+                <span>Kirim Formulir Pemesanan</span>
+              </button>
+            </form>
+
+            <div id="alert-success" class="hidden mt-4 p-4 bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300 rounded-xl border border-emerald-200 dark:border-emerald-900 text-sm"></div>
+            <div id="alert-error" class="hidden mt-4 p-4 bg-rose-100 dark:bg-rose-950 text-rose-800 dark:text-rose-300 rounded-xl border border-rose-200 dark:border-rose-900 text-sm"></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 py-8 transition-colors duration-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div class="flex items-center space-x-2">
+        <div class="h-8 w-8 bg-indigo-600 rounded-lg flex items-center justify-center text-white font-black text-sm">
+          H
+        </div>
+        <span class="font-bold tracking-tight bg-gradient-to-r from-indigo-600 to-purple-600 dark:from-indigo-400 dark:to-purple-400 bg-clip-text text-transparent">
+          HAY STUDIO
+        </span>
+      </div>
+      <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400">
+        &copy; 2026 Hay Studio. Hak Cipta Dilindungi.
+      </p>
+    </div>
+  </footer>
+
+  <!-- MODAL PILIH PAKET INTERAKTIF -->
+  <div id="modal-pilih-paket" class="fixed inset-0 z-50 overflow-y-auto hidden">
+    <!-- Backdrop -->
+    <div class="fixed inset-0 bg-slate-950/60 backdrop-blur-sm" onclick="tutupModalPilihPaket()"></div>
+    
+    <div class="flex min-h-full items-center justify-center p-4 text-center">
+      <div class="relative transform overflow-hidden rounded-3xl bg-white dark:bg-slate-900 p-6 sm:p-8 text-left shadow-2xl transition-all w-full max-w-lg border border-slate-100 dark:border-slate-800">
+        
+        <!-- Header -->
+        <div class="flex items-center justify-between mb-4">
+          <span class="text-xs font-bold uppercase tracking-wider text-indigo-500 bg-indigo-100 dark:bg-indigo-950/80 dark:text-indigo-300 px-3 py-1 rounded-full">
+            Konfirmasi Minat Paket
+          </span>
+          <button onclick="tutupModalPilihPaket()" class="p-1 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-400">
+            <i class="fa-solid fa-xmark text-lg"></i>
+          </button>
+        </div>
+
+        <!-- Dynamic Title & Body -->
+        <h3 id="txt-paket-pilihan-title" class="text-xl sm:text-2xl font-black text-slate-900 dark:text-white leading-snug mb-2">
+          Tertarik dengan Paket Basic - Landing Page
+        </h3>
+        <p class="text-slate-500 dark:text-slate-400 text-sm mb-8 leading-relaxed">
+          Pilih jalur konsultasi tercepat bersama tim ahli dari Hay Studio.
+        </p>
+
+        <!-- Opsi Jalur Konsultasi -->
+        <div class="space-y-4">
+          <!-- WhatsApp consultation -->
+          <a id="btn-pilih-paket-wa" href="#" target="_blank" class="block w-full p-4 rounded-2xl border border-emerald-500/20 bg-emerald-50/50 hover:bg-emerald-50 dark:bg-emerald-950/20 dark:hover:bg-emerald-950/40 text-left transition-all group shadow-sm">
+            <div class="flex items-center justify-between">
+              <div>
+                <h4 class="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                  <i class="fa-brands fa-whatsapp text-emerald-500 text-xl"></i>
+                  Chat via WhatsApp
+                </h4>
+                <p class="text-xs text-slate-400 mt-0.5">Terhubung langsung sekarang juga.</p>
+              </div>
+              <i class="fa-solid fa-chevron-right text-slate-300 group-hover:translate-x-1 transition-transform"></i>
+            </div>
+          </a>
+
+          <!-- Custom Budget Discussion -->
+          <button onclick="opsiDiskusikanForm()" class="block w-full p-4 rounded-2xl border border-indigo-500/20 bg-indigo-50/50 hover:bg-indigo-50 dark:bg-indigo-950/20 dark:hover:bg-indigo-950/40 text-left transition-all group shadow-sm">
+            <div class="flex items-center justify-between">
+              <div>
+                <h4 class="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                  <i class="fa-solid fa-magnifying-glass-dollar text-indigo-500 text-lg"></i>
+                  Diskusikan Paket Harga
+                </h4>
+                <p class="text-xs text-slate-400 mt-0.5">Rancang kustomisasi sesuai budgetmu.</p>
+              </div>
+              <i class="fa-solid fa-chevron-right text-slate-300 group-hover:translate-x-1 transition-transform"></i>
+            </div>
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL LOGIN ADMIN -->
+  <div id="modal-login" class="fixed inset-0 z-50 overflow-y-auto hidden">
+    <div class="fixed inset-0 bg-slate-950/60 backdrop-blur-sm" onclick="tutupModalLogin()"></div>
+    <div class="flex min-h-full items-center justify-center p-4 text-center">
+      <div class="relative transform overflow-hidden rounded-3xl bg-white dark:bg-slate-900 p-6 sm:p-8 text-left shadow-2xl transition-all w-full max-w-md border border-slate-100 dark:border-slate-800">
+        
+        <div class="flex items-center justify-between mb-6">
+          <h3 class="text-xl font-extrabold text-slate-900 dark:text-white flex items-center gap-2">
+            <i class="fa-solid fa-shield-halved text-indigo-500"></i>
+            Akses Panel Admin
+          </h3>
+          <button onclick="tutupModalLogin()" class="p-1 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-400">
+            <i class="fa-solid fa-xmark text-lg"></i>
+          </button>
+        </div>
+
+        <p class="text-sm text-slate-500 dark:text-slate-400 mb-6">
+          Masukkan PIN atau Password Akses khusus untuk melihat rekaman pesanan pelanggan langsung dari database Google Sheets.
+        </p>
+
+        <form onsubmit="handleLoginSubmit(event)" class="space-y-4">
+          <div class="relative">
+            <label class="block text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider mb-2">Password / PIN Akses</label>
+            <div class="relative">
+              <input type="password" id="input-pin" required class="w-full pl-4 pr-12 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-950 focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm tracking-widest text-slate-800 dark:text-white font-mono" placeholder="••••••••">
+              
+              <!-- Ikon Mata Elang (Show/Hide Password) -->
+              <button type="button" onclick="togglePasswordEye()" class="absolute right-3 top-1/2 -translate-y-1/2 p-2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 focus:outline-none" title="Intip Password">
+                <i id="eye-icon" class="fa-solid fa-eye text-base"></i>
+              </button>
+            </div>
+          </div>
+
+          <button type="submit" id="btn-submit-login" class="w-full py-3 bg-indigo-600 hover:bg-indigo-700 dark:bg-indigo-500 dark:hover:bg-indigo-600 text-white font-bold rounded-xl text-sm transition-all flex items-center justify-center space-x-2">
+            <i class="fa-solid fa-lock-open"></i>
+            <span>Verifikasi Masuk</span>
+          </button>
+        </form>
+
+        <div id="login-error-alert" class="hidden mt-4 p-3 bg-rose-100 dark:bg-rose-950 text-rose-800 dark:text-rose-300 rounded-xl border border-rose-200 dark:border-rose-900 text-xs"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL DASHBOARD / DATA PESANAN & PENGATURAN -->
+  <div id="modal-dashboard" class="fixed inset-0 z-50 overflow-y-auto hidden">
+    <!-- Backdrop -->
+    <div class="fixed inset-0 bg-slate-950/70 backdrop-blur-sm" onclick="tutupModalDashboard()"></div>
+
+    <div class="flex min-h-full items-center justify-center p-4 text-center">
+      <div class="relative transform overflow-hidden rounded-3xl bg-white dark:bg-slate-900 p-6 sm:p-8 text-left shadow-2xl transition-all w-full max-w-5xl border border-slate-100 dark:border-slate-800">
+        
+        <!-- Header Dashboard -->
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6 pb-4 border-b border-slate-200 dark:border-slate-800">
+          <div>
+            <h3 class="text-2xl font-extrabold text-slate-900 dark:text-white flex items-center gap-2">
+              <i class="fa-solid fa-chart-line text-indigo-500 animate-pulse"></i>
+              Panel Pengelolaan Hay Studio
+            </h3>
+            <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Sistem sinkronisasi asinkronus terhubung ke Google Sheets Database</p>
+          </div>
+          <div class="flex items-center space-x-3">
+            <button onclick="refreshDashboard()" class="p-2 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 rounded-xl text-slate-600 dark:text-slate-300 text-sm transition-all flex items-center gap-1.5">
+              <i class="fa-solid fa-rotate"></i>
+              <span>Refresh</span>
+            </button>
+            <button onclick="tutupModalDashboard()" class="p-2 bg-rose-500/10 text-rose-600 hover:bg-rose-500/20 rounded-xl text-sm transition-all flex items-center gap-1.5">
+              <i class="fa-solid fa-xmark"></i>
+              <span>Tutup</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Dashboard Tabs -->
+        <div class="flex space-x-1 bg-slate-100 dark:bg-slate-950 p-1.5 rounded-xl border border-slate-200/50 dark:border-slate-800 mb-6 w-fit">
+          <button id="btn-tab-orders" onclick="switchDashboardTab('orders')" class="px-5 py-2 text-xs font-bold rounded-lg transition-all bg-white dark:bg-slate-900 text-indigo-600 shadow-sm">
+            <i class="fa-solid fa-list-check mr-1.5"></i>Daftar Pemesanan
+          </button>
+          <button id="btn-tab-settings" onclick="switchDashboardTab('settings')" class="px-5 py-2 text-xs font-bold rounded-lg transition-all text-slate-600 dark:text-slate-400 hover:text-indigo-500">
+            <i class="fa-solid fa-gears mr-1.5"></i>Pengaturan Studio
+          </button>
+        </div>
+
+        <!-- PANEL 1: DAFTAR PESANAN -->
+        <div id="panel-orders" class="block">
+          <div class="overflow-x-auto rounded-2xl border border-slate-200 dark:border-slate-800">
+            <table class="min-w-full divide-y divide-slate-200 dark:divide-slate-800 text-sm text-left">
+              <thead class="bg-slate-50 dark:bg-slate-950 text-slate-500 dark:text-slate-400 uppercase tracking-wider text-[10px] font-bold">
+                <tr>
+                  <th scope="col" class="px-6 py-4">Tanggal/Jam</th>
+                  <th scope="col" class="px-6 py-4">Pelanggan</th>
+                  <th scope="col" class="px-6 py-4">WhatsApp & Email</th>
+                  <th scope="col" class="px-6 py-4">Tipe Web</th>
+                  <th scope="col" class="px-6 py-4">Catatan Kebutuhan</th>
+                  <th scope="col" class="px-6 py-4">Aksi Kelola Status</th>
+                </tr>
+              </thead>
+              <tbody id="tabel-pesanan-body" class="divide-y divide-slate-200 dark:divide-slate-800 bg-white dark:bg-slate-900/50">
+                <!-- Data diisi via Javascript -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- PANEL 2: PENGATURAN STUDIO -->
+        <div id="panel-settings" class="hidden">
+          <div class="bg-slate-50 dark:bg-slate-950/80 p-6 rounded-2xl border border-slate-200/60 dark:border-slate-850">
+            <h4 class="text-lg font-bold mb-4 text-slate-900 dark:text-white flex items-center gap-1.5">
+              <i class="fa-solid fa-sliders text-indigo-500"></i>
+              Konfigurasi Publik Landing Page
+            </h4>
+            
+            <form id="form-settings-studio" onsubmit="handleSettingsSubmit(event)" class="space-y-6">
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- WhatsApp Setting -->
+                <div>
+                  <label class="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-2">No. WhatsApp Admin (Mulai dengan '0' atau '62')</label>
+                  <input type="text" id="set-whatsapp" required class="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm text-slate-900 dark:text-white font-semibold" placeholder="Contoh: 081234567890">
+                </div>
+                <!-- Email Setting -->
+                <div>
+                  <label class="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-2">Alamat Email Resmi</label>
+                  <input type="email" id="set-email" required class="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm text-slate-900 dark:text-white font-semibold" placeholder="halo@haystudio.com">
+                </div>
+              </div>
+
+              <!-- Upload Logo Setting -->
+              <div class="border-t border-slate-200/60 dark:border-slate-800 pt-6">
+                <label class="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-2">Ganti Logo Studio (.png, .jpg, .webp)</label>
+                <div class="flex items-center space-x-4">
+                  <div id="preview-logo-admin" class="h-16 w-16 bg-slate-200 dark:bg-slate-850 rounded-2xl flex items-center justify-center overflow-hidden border border-slate-200 dark:border-slate-700">
+                    <span class="text-slate-400 text-xs font-semibold">No Logo</span>
+                  </div>
+                  <div class="flex-1">
+                    <input type="file" id="upload-logo-file" accept="image/*" onchange="previewSelectedLogo(this)" class="block w-full text-xs text-slate-500 file:mr-4 file:py-2.5 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100 dark:file:bg-slate-800 dark:file:text-slate-300">
+                    <p class="text-[10px] text-slate-400 mt-1">Kosongkan jika ingin tetap menggunakan lambang huruf 'H' bawaan.</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Submit Button Settings -->
+              <div class="border-t border-slate-200/60 dark:border-slate-800 pt-6 flex justify-end">
+                <button type="submit" id="btn-submit-settings" class="px-6 py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl text-sm transition-all flex items-center space-x-2 shadow-lg shadow-emerald-600/10">
+                  <i class="fa-regular fa-floppy-disk"></i>
+                  <span>Simpan Semua Perubahan</span>
+                </button>
+              </div>
+            </form>
+            
+            <div id="settings-status-alert" class="hidden mt-4 p-4 rounded-xl text-sm"></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- JAVASCRIPT LOGIC -->
+  <script>
+    // =========================================================================
+    // CONFIGURASI ENDPOINT GOOGLE APPS SCRIPT (GAS_URL)
+    // =========================================================================
+    // Salin Tautan URL Web App Google Apps Script Anda setelah "Deploy" -> "New Deployment"
+    // Contoh: const GAS_URL = "https://script.google.com/macros/s/AKfycb...dst/exec";
+    // Jika Anda menjalankan halaman ini LANGSUNG di dalam Google Apps Script (doGet), kosongkan saja ("").
+    const GAS_URL = "https://script.google.com/macros/s/AKfycby0mwhm8Q3IhIYanpIisup08ukIF1WtPAMW1WwIBmxAEpgPejo74reyNXOImijhT7i5/exec"; 
+
+    let logoBase64Upload = null;
+    window.appSettings = {};
+
+    // INJEKSI AMAN DARI GOOGLE APPS SCRIPT DAN FALLBACK MODE PREVIEW
+    function inisialisasiPengaturanLokal() {
+      const fallbackSettings = {
+        "WA_NUMBER": "081234567890",
+        "EMAIL_ADDRESS": "halo@haystudio.com",
+        "LOGO_BASE64": ""
+      };
+
+      const rawEl = document.getElementById("gas-raw-settings");
+      if (rawEl) {
+        const strContent = rawEl.textContent.trim();
+        if (strContent && !strContent.includes("<?") && !strContent.includes("typeof settings")) {
+          try {
+            window.appSettings = JSON.parse(strContent);
+            applyDinamisSettings();
+            return;
+          } catch(err) {
+            console.error("Format data GAS rusak, menggunakan data fallback.", err);
+          }
+        }
+      }
+      
+      // Jika berjalan di hosting eksternal dan GAS_URL terisi, ambil data settings awal dari server secara asinkronus
+      if (GAS_URL && GAS_URL !== "" && GAS_URL !== "URL_WEB_APP_GAS_ANDA_DISINI") {
+        routerApi("getInitialData", {})
+          .then(res => {
+            if (res && res.success) {
+              window.appSettings = res.settings;
+              applyDinamisSettings();
+            } else {
+              window.appSettings = fallbackSettings;
+              applyDinamisSettings();
+            }
+          })
+          .catch(err => {
+            console.warn("Gagal fetch initial settings dari GAS_URL, menggunakan fallback lokal.", err);
+            window.appSettings = fallbackSettings;
+            applyDinamisSettings();
+          });
+      } else {
+        window.appSettings = fallbackSettings;
+        applyDinamisSettings();
+      }
+    }
+
+    // -------------------------------------------------------------------------
+    // ROUTER KOMUNIKASI ASINKRONUS (GAS VS API EXTERNAL FETCH)
+    // -------------------------------------------------------------------------
+    function routerApi(action, dataPayload) {
+      return new Promise((resolve, reject) => {
+        // 1. Skenario berjalan di dalam Google Apps Script (google.script.run tersedia)
+        if (typeof google !== 'undefined' && google.script && google.script.run) {
+          google.script.run
+            .withSuccessHandler(resolve)
+            .withFailureHandler(reject)[action](dataPayload);
+        }
+        // 2. Skenario berjalan di luar GAS (Vercel/Hosting eksternal) menggunakan GAS_URL
+        else if (GAS_URL && GAS_URL !== "" && GAS_URL !== "URL_WEB_APP_GAS_ANDA_DISINI") {
+          // Buat POST request menggunakan text/plain untuk mencegah CORS preflight OPTIONS block
+          fetch(GAS_URL, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'text/plain'
+            },
+            body: JSON.stringify({
+              action: action,
+              data: dataPayload
+            })
+          })
+          .then(response => {
+            if (!response.ok) throw new Error("HTTP error " + response.status);
+            return response.json();
+          })
+          .then(resolve)
+          .catch(reject);
+        }
+        // 3. Skenario simulasi pratinjau offline (Offline Preview Mode)
+        else {
+          console.log(`[SIMULASI OFFLINE] Aksi: ${action}`, dataPayload);
+          setTimeout(() => {
+            if (action === "simpanPesanan") {
+              resolve({ success: true, message: "[MODE PREVIEW] Formulir pesanan tersimulasi masuk ke database Google Sheets." });
+            } else if (action === "verifikasiAkses") {
+              if (dataPayload === "admin123") {
+                resolve({
+                  success: true,
+                  data: [
+                    { timestamp: "2026-06-27 10:15", nama: "Fajar Pratama", email: "fajar@gmail.com", whatsapp: "081299991111", tipeWeb: "Landing Page", pesan: "Minta dibuatkan landing page jualan aksesoris", status: "Baru" },
+                    { timestamp: "2026-06-26 14:20", nama: "Kartika Sari", email: "kartika@corp.com", whatsapp: "081388882222", tipeWeb: "Company Profile", pesan: "Pembuatan website firma hukum", status: "Diproses" }
+                  ],
+                  settings: window.appSettings
+                });
+              } else {
+                resolve({ success: false, message: "PIN Akses Salah! (Gunakan password default: admin123)" });
+              }
+            } else if (action === "simpanSettings") {
+              resolve({ success: true, message: "[MODE PREVIEW] Konfigurasi baru tersimpan di memori browser." });
+            } else if (action === "updateStatusPemesanan") {
+              resolve({ success: true, message: "[MODE PREVIEW] Status pesanan berhasil diperbarui!" });
+            } else {
+              resolve({ success: true });
+            }
+          }, 1000);
+        }
+      });
+    }
+
+    // ----------------------------------------------------
+    // INISIALISASI DATA DAN KONTROL PUBLIK
+    // ----------------------------------------------------
+    function applyDinamisSettings() {
+      const s = window.appSettings;
+      if (!s) return;
+
+      const cleanWA = cleanPhoneNumber(s.WA_NUMBER);
+      const linkWa = document.getElementById('link-wa-studio');
+      const labelWa = document.getElementById('label-wa-studio');
+      if (linkWa) linkWa.href = `https://wa.me/${cleanWA}`;
+      if (labelWa) labelWa.innerText = formatReadablePhone(s.WA_NUMBER);
+
+      const linkEmail = document.getElementById('link-email-studio');
+      const labelEmail = document.getElementById('label-email-studio');
+      if (linkEmail) linkEmail.href = `mailto:${s.EMAIL_ADDRESS}`;
+      if (labelEmail) labelEmail.innerText = s.EMAIL_ADDRESS;
+
+      const containerLogo = document.getElementById('container-logo');
+      if (containerLogo) {
+        if (s.LOGO_BASE64 && s.LOGO_BASE64.trim() !== "") {
+          containerLogo.innerHTML = `<img src="${s.LOGO_BASE64}" alt="Logo" class="h-full w-full object-cover">`;
+        } else {
+          containerLogo.innerHTML = `<span id="text-logo-fallback">H</span>`;
+        }
+      }
+    }
+
+    function cleanPhoneNumber(num) {
+      if (!num) return "6281234567890";
+      let cleaned = num.replace(/[^0-9]/g, '');
+      if (cleaned.startsWith('0')) {
+        cleaned = '62' + cleaned.slice(1);
+      }
+      return cleaned;
+    }
+
+    function formatReadablePhone(num) {
+      if (!num) return "0812-3456-7890";
+      let cleaned = num.replace(/[^0-9]/g, '');
+      if (cleaned.startsWith('62')) {
+        cleaned = '0' + cleaned.slice(2);
+      }
+      if (cleaned.length >= 12) {
+        return cleaned.replace(/(\d{4})(\d{4})(\d{3,5})/, '$1-$2-$3');
+      }
+      return cleaned;
+    }
+
+    // ----------------------------------------------------
+    // THEME TOGGLE
+    // ----------------------------------------------------
+    const themeToggleBtn = document.getElementById('theme-toggle');
+    const themeIcon = document.getElementById('theme-icon');
+
+    if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      document.documentElement.classList.add('dark');
+      themeIcon.className = 'fa-solid fa-sun text-lg';
+    } else {
+      document.documentElement.classList.remove('dark');
+      themeIcon.className = 'fa-solid fa-moon text-lg';
+    }
+
+    themeToggleBtn.addEventListener('click', function() {
+      if (document.documentElement.classList.contains('dark')) {
+        document.documentElement.classList.remove('dark');
+        localStorage.setItem('color-theme', 'light');
+        themeIcon.className = 'fa-solid fa-moon text-lg';
+      } else {
+        document.documentElement.classList.add('dark');
+        localStorage.setItem('color-theme', 'dark');
+        themeIcon.className = 'fa-solid fa-sun text-lg';
+      }
+    });
+
+    // ----------------------------------------------------
+    // WIDGET HARI, TANGGAL, DAN JAM REAL-TIME
+    // ----------------------------------------------------
+    function updateClock() {
+      const now = new Date();
+      const namaHari = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
+      const namaBulan = [
+        "Januari", "Februari", "Maret", "April", "Mei", "Juni",
+        "Juli", "Agustus", "September", "Oktober", "November", "Desember"
+      ];
+      
+      const hari = namaHari[now.getDay()];
+      const tanggal = now.getDate();
+      const bulan = namaBulan[now.getMonth()];
+      const tahun = now.getFullYear();
+      
+      let jam = now.getHours().toString().padStart(2, '0');
+      let menit = now.getMinutes().toString().padStart(2, '0');
+      let detik = now.getSeconds().toString().padStart(2, '0');
+
+      const stringTanggal = `${hari}, ${tanggal} ${bulan} ${tahun}`;
+      const stringJam = `${jam}:${menit}:${detik}`;
+
+      const tEl = document.getElementById('txt-hari-tanggal-hero');
+      const jEl = document.getElementById('txt-jam-mobile');
+      if (tEl) tEl.innerText = stringTanggal;
+      if (jEl) jEl.innerText = stringJam;
+    }
+    
+    setInterval(updateClock, 1000);
+    updateClock();
+
+    // ----------------------------------------------------
+    // EFEK KETIKAN HURUF PER HURUF (TYPEWRITER EFFECT)
+    // ----------------------------------------------------
+    const words = ["Mudah", "Estetik", "Keren", "Cepat"];
+    let wordIndex = 0;
+    let charIndex = 0;
+    let isDeleting = false;
+    const typingSpeed = 150;
+    const erasingSpeed = 75;
+    const delayBetweenWords = 2000;
+    const rotatingWordEl = document.getElementById('rotating-word');
+
+    function typeEffect() {
+      if (!rotatingWordEl) return;
+
+      const currentWord = words[wordIndex];
+      
+      if (isDeleting) {
+        rotatingWordEl.innerText = currentWord.substring(0, charIndex - 1);
+        charIndex--;
+      } else {
+        rotatingWordEl.innerText = currentWord.substring(0, charIndex + 1);
+        charIndex++;
+      }
+
+      let currentSpeed = isDeleting ? erasingSpeed : typingSpeed;
+
+      if (!isDeleting && charIndex === currentWord.length) {
+        currentSpeed = delayBetweenWords;
+        isDeleting = true;
+      } else if (isDeleting && charIndex === 0) {
+        isDeleting = false;
+        wordIndex = (wordIndex + 1) % words.length;
+        currentSpeed = 300;
+      }
+
+      setTimeout(typeEffect, currentSpeed);
+    }
+
+    // ----------------------------------------------------
+    // KONTROL SELEKSI PAKET & INTERAKSI MODAL PILIH PAKET
+    // ----------------------------------------------------
+    let paketTerpilihNama = "";
+    let paketTerpilihSub = "";
+
+    function pilihPaket(tipeWebsite, subHeader) {
+      paketTerpilihNama = tipeWebsite;
+      paketTerpilihSub = subHeader;
+
+      const titleEl = document.getElementById('txt-paket-pilihan-title');
+      if (titleEl) {
+        titleEl.innerText = `Tertarik dengan Paket ${tipeWebsite} - ${subHeader}`;
+      }
+      
+      const targetWA = cleanPhoneNumber(window.appSettings.WA_NUMBER || "081234567890");
+      const textWA = encodeURIComponent(`Halo Hay Studio, saya tertarik dengan paket *${tipeWebsite} - ${subHeader}*. Mohon info lebih lanjut untuk konsultasi.`);
+      
+      const linkWaEl = document.getElementById('btn-pilih-paket-wa');
+      if (linkWaEl) {
+        linkWaEl.href = `https://wa.me/${targetWA}?text=${textWA}`;
+      }
+
+      const modalEl = document.getElementById('modal-pilih-paket');
+      if (modalEl) {
+        modalEl.classList.remove('hidden');
+      }
+      document.body.classList.add('overflow-hidden');
+    }
+
+    function tutupModalPilihPaket() {
+      const modalEl = document.getElementById('modal-pilih-paket');
+      if (modalEl) {
+        modalEl.classList.add('hidden');
+      }
+      document.body.classList.remove('overflow-hidden');
+    }
+
+    function opsiDiskusikanForm() {
+      tutupModalPilihPaket();
+      const selectBox = document.getElementById('select-tipe-web');
+      if (selectBox) {
+        selectBox.value = paketTerpilihNama;
+      }
+      const sectionHubungi = document.getElementById('hubungi');
+      if (sectionHubungi) {
+        sectionHubungi.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+
+    // ----------------------------------------------------
+    // FORMULIR TRANSAKSI PESANAN SUBMISSION (ASINKRONUS)
+    // ----------------------------------------------------
+    function handleFormSubmit(event) {
+      event.preventDefault();
+      
+      const form = document.getElementById('form-pesanan');
+      const submitBtn = document.getElementById('btn-submit-pesanan');
+      const alertSuccess = document.getElementById('alert-success');
+      const alertError = document.getElementById('alert-error');
+
+      alertSuccess.classList.add('hidden');
+      alertError.classList.add('hidden');
+
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = `<i class="fa-solid fa-circle-notch animate-spin"></i> <span>Sedang Mengirim Pesanan...</span>`;
+
+      const payload = {
+        nama: form.nama.value,
+        email: form.email.value,
+        whatsapp: form.whatsapp.value,
+        tipeWeb: form.tipeWeb.value,
+        pesan: form.pesan.value
+      };
+
+      routerApi("simpanPesanan", payload)
+        .then(response => {
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = `<i class="fa-regular fa-paper-plane"></i> <span>Kirim Formulir Pemesanan</span>`;
+          
+          if (response.success) {
+            alertSuccess.innerText = response.message;
+            alertSuccess.classList.remove('hidden');
+            form.reset();
+          } else {
+            alertError.innerText = response.message;
+            alertError.classList.remove('hidden');
+          }
+        })
+        .catch(error => {
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = `<i class="fa-regular fa-paper-plane"></i> <span>Kirim Formulir Pemesanan</span>`;
+          alertError.innerText = "Terjadi kegagalan komunikasi ke Google Sheets: " + error.toString();
+          alertError.classList.remove('hidden');
+        });
+    }
+
+    // ----------------------------------------------------
+    // PANEL AKSES ADMIN & DASHBOARD CONTROL
+    // ----------------------------------------------------
+    const modalLogin = document.getElementById('modal-login');
+    const modalDashboard = document.getElementById('modal-dashboard');
+    const inputPin = document.getElementById('input-pin');
+    const eyeIcon = document.getElementById('eye-icon');
+    let pinAksesTerakhir = ''; 
+
+    function bukaModalLogin() {
+      if (modalLogin) modalLogin.classList.remove('hidden');
+      document.body.classList.add('overflow-hidden');
+    }
+
+    function tutupModalLogin() {
+      if (modalLogin) modalLogin.classList.add('hidden');
+      document.body.classList.remove('overflow-hidden');
+      const errEl = document.getElementById('login-error-alert');
+      if (errEl) errEl.classList.add('hidden');
+      if (inputPin) inputPin.value = '';
+    }
+
+    function togglePasswordEye() {
+      if (!inputPin) return;
+      if (inputPin.type === "password") {
+        inputPin.type = "text";
+        if (eyeIcon) {
+          eyeIcon.className = "fa-solid fa-eye-slash text-indigo-500 animate-pulse";
+          eyeIcon.setAttribute('title', 'Sembunyikan PIN');
+        }
+      } else {
+        inputPin.type = "password";
+        if (eyeIcon) {
+          eyeIcon.className = "fa-solid fa-eye text-slate-400";
+          eyeIcon.setAttribute('title', 'Intip PIN');
+        }
+      }
+    }
+
+    function handleLoginSubmit(event) {
+      event.preventDefault();
+      if (!inputPin) return;
+      
+      const pinValue = inputPin.value;
+      const btnSubmitLogin = document.getElementById('btn-submit-login');
+      const errorAlert = document.getElementById('login-error-alert');
+
+      if (errorAlert) errorAlert.classList.add('hidden');
+      if (btnSubmitLogin) {
+        btnSubmitLogin.disabled = true;
+        btnSubmitLogin.innerHTML = `<i class="fa-solid fa-circle-notch animate-spin"></i> <span>Memverifikasi PIN...</span>`;
+      }
+
+      routerApi("verifikasiAkses", pinValue)
+        .then(response => {
+          if (btnSubmitLogin) {
+            btnSubmitLogin.disabled = false;
+            btnSubmitLogin.innerHTML = `<i class="fa-solid fa-lock-open"></i> <span>Verifikasi Masuk</span>`;
+          }
+          if (response.success) {
+            pinAksesTerakhir = pinValue; 
+            tutupModalLogin();
+            tampilkanDashboard(response.data, response.settings);
+          } else {
+            if (errorAlert) {
+              errorAlert.innerText = response.message;
+              errorAlert.classList.remove('hidden');
+            }
+          }
+        })
+        .catch(error => {
+          if (btnSubmitLogin) {
+            btnSubmitLogin.disabled = false;
+            btnSubmitLogin.innerHTML = `<i class="fa-solid fa-lock-open"></i> <span>Verifikasi Masuk</span>`;
+          }
+          if (errorAlert) {
+            errorAlert.innerText = "Gagal terhubung ke API Verifikasi: " + error.toString();
+            errorAlert.classList.remove('hidden');
+          }
+        });
+    }
+
+    function tampilkanDashboard(dataPesanan, settingsObj) {
+      const tbody = document.getElementById('tabel-pesanan-body');
+      if (!tbody) return;
+      tbody.innerHTML = ''; 
+      
+      if (!dataPesanan || dataPesanan.length === 0) {
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="6" class="px-6 py-12 text-center text-slate-400 dark:text-slate-500">
+              <i class="fa-solid fa-inbox text-3xl mb-2 block"></i>
+              Belum ada pesanan masuk di Google Sheets Hay Studio.
+            </td>
+          </tr>
+        `;
+      } else {
+        dataPesanan.forEach(item => {
+          const tr = document.createElement('tr');
+          tr.className = "hover:bg-slate-50/50 dark:hover:bg-slate-800/30 transition-colors";
+          
+          const statusVal = item.status || "Baru";
+          const statusSelectorHtml = `
+            <select onchange="updateStatusSore('${item.timestamp}', this.value)" class="px-3 py-1.5 text-xs font-bold rounded-lg border border-slate-200 dark:border-slate-750 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 focus:ring-1 focus:ring-indigo-500">
+              <option value="Baru" ${statusVal === 'Baru' ? 'selected' : ''}>Baru</option>
+              <option value="Diproses" ${statusVal === 'Diproses' ? 'selected' : ''}>Diproses</option>
+              <option value="Selesai" ${statusVal === 'Selesai' ? 'selected' : ''}>Selesai</option>
+            </select>
+          `;
+
+          tr.innerHTML = `
+            <td class="px-6 py-4 whitespace-nowrap text-xs text-slate-400 dark:text-slate-500 font-mono">${item.timestamp}</td>
+            <td class="px-6 py-4 whitespace-nowrap font-bold text-slate-900 dark:text-white">${item.nama}</td>
+            <td class="px-6 py-4 whitespace-nowrap text-slate-600 dark:text-slate-400">
+              <div class="flex flex-col">
+                <span class="text-xs font-medium"><i class="fa-brands fa-whatsapp text-green-500 mr-1"></i> ${item.whatsapp}</span>
+                <span class="text-xs text-slate-400 font-light mt-0.5"><i class="fa-regular fa-envelope mr-1"></i> ${item.email}</span>
+              </div>
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap text-xs text-slate-700 dark:text-slate-300 font-semibold">${item.tipeWeb}</td>
+            <td class="px-6 py-4 text-slate-600 dark:text-slate-300 max-w-xs truncate" title="${item.pesan}">${item.pesan}</td>
+            <td class="px-6 py-4 whitespace-nowrap">${statusSelectorHtml}</td>
+          `;
+          tbody.appendChild(tr);
+        });
+      }
+
+      if (settingsObj) {
+        const waSet = document.getElementById('set-whatsapp');
+        const mailSet = document.getElementById('set-email');
+        if (waSet) waSet.value = settingsObj.WA_NUMBER;
+        if (mailSet) mailSet.value = settingsObj.EMAIL_ADDRESS;
+        
+        const previewAdmin = document.getElementById('preview-logo-admin');
+        if (previewAdmin) {
+          if (settingsObj.LOGO_BASE64 && settingsObj.LOGO_BASE64.trim() !== "") {
+            previewAdmin.innerHTML = `<img src="${settingsObj.LOGO_BASE64}" class="h-full w-full object-cover">`;
+          } else {
+            previewAdmin.innerHTML = `<span class="text-slate-400 text-xs font-semibold">No Logo</span>`;
+          }
+        }
+      }
+      
+      switchDashboardTab('orders');
+      if (modalDashboard) modalDashboard.classList.remove('hidden');
+      document.body.classList.add('overflow-hidden');
+    }
+
+    function switchDashboardTab(tabId) {
+      const btnOrders = document.getElementById('btn-tab-orders');
+      const btnSettings = document.getElementById('btn-tab-settings');
+      const panelOrders = document.getElementById('panel-orders');
+      const panelSettings = document.getElementById('panel-settings');
+
+      if (!btnOrders || !btnSettings || !panelOrders || !panelSettings) return;
+
+      if (tabId === 'orders') {
+        btnOrders.className = "px-5 py-2 text-xs font-bold rounded-lg transition-all bg-white dark:bg-slate-900 text-indigo-600 shadow-sm";
+        btnSettings.className = "px-5 py-2 text-xs font-bold rounded-lg transition-all text-slate-600 dark:text-slate-400 hover:text-indigo-500";
+        panelOrders.classList.remove('hidden');
+        panelSettings.classList.add('hidden');
+      } else {
+        btnSettings.className = "px-5 py-2 text-xs font-bold rounded-lg transition-all bg-white dark:bg-slate-900 text-indigo-600 shadow-sm";
+        btnOrders.className = "px-5 py-2 text-xs font-bold rounded-lg transition-all text-slate-600 dark:text-slate-400 hover:text-indigo-500";
+        panelSettings.classList.remove('hidden');
+        panelOrders.classList.add('hidden');
+      }
+    }
+
+    function refreshDashboard() {
+      if (!pinAksesTerakhir) return;
+      
+      routerApi("verifikasiAkses", pinAksesTerakhir)
+        .then(response => {
+          if (response.success) {
+            window.appSettings = response.settings;
+            applyDinamisSettings();
+            tampilkanDashboard(response.data, response.settings);
+          }
+        })
+        .catch(err => console.error("Refresh dashboard gagal:", err));
+    }
+
+    // ----------------------------------------------------
+    // ASINKRONUS UPDATE STATUS PESANAN (ACTION DROPDOWN)
+    // ----------------------------------------------------
+    function updateStatusSore(timestampStr, statusBaru) {
+      routerApi("updateStatusPemesanan", { timestamp: timestampStr, status: statusBaru })
+        .then(response => {
+          if (response.success) {
+            console.log(response.message);
+          } else {
+            alert("Gagal mengubah status: " + response.message);
+          }
+        })
+        .catch(error => {
+          alert("Kesalahan koneksi update status: " + error.toString());
+        });
+    }
+
+    // ----------------------------------------------------
+    // PENGATURAN LOGO PREVIEW & BASE64 READER
+    // ----------------------------------------------------
+    function previewSelectedLogo(input) {
+      if (input.files && input.files[0]) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          logoBase64Upload = e.target.result;
+          const preview = document.getElementById('preview-logo-admin');
+          if (preview) {
+            preview.innerHTML = `<img src="${logoBase64Upload}" class="h-full w-full object-cover">`;
+          }
+        };
+        reader.readAsDataURL(input.files[0]);
+      }
+    }
+
+    // SUBMIT PENGATURAN BARU
+    function handleSettingsSubmit(event) {
+      event.preventDefault();
+
+      const btnSubmit = document.getElementById('btn-submit-settings');
+      const statusAlert = document.getElementById('settings-status-alert');
+      
+      const waVal = document.getElementById('set-whatsapp').value;
+      const emailVal = document.getElementById('set-email').value;
+
+      if (statusAlert) statusAlert.className = "hidden mt-4 p-4 rounded-xl text-sm";
+      if (btnSubmit) {
+        btnSubmit.disabled = true;
+        btnSubmit.innerHTML = `<i class="fa-solid fa-spinner animate-spin"></i> <span>Menyimpan Pengaturan...</span>`;
+      }
+
+      routerApi("simpanSettings", { wa: waVal, email: emailVal, logo: logoBase64Upload })
+        .then(response => {
+          if (btnSubmit) {
+            btnSubmit.disabled = false;
+            btnSubmit.innerHTML = `<i class="fa-regular fa-floppy-disk"></i> <span>Simpan Semua Perubahan</span>`;
+          }
+          
+          if (response.success) {
+            if (statusAlert) {
+              statusAlert.innerText = response.message;
+              statusAlert.className = "block mt-4 p-4 rounded-xl text-sm bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300";
+            }
+
+            window.appSettings.WA_NUMBER = waVal;
+            window.appSettings.EMAIL_ADDRESS = emailVal;
+            if (logoBase64Upload) {
+              window.appSettings.LOGO_BASE64 = logoBase64Upload;
+            }
+            const fileInput = document.getElementById('upload-logo-file');
+            if (fileInput) fileInput.value = '';
+            logoBase64Upload = null;
+            
+            applyDinamisSettings();
+          } else {
+            if (statusAlert) {
+              statusAlert.innerText = response.message;
+              statusAlert.className = "block mt-4 p-4 rounded-xl text-sm bg-rose-100 text-rose-800 dark:bg-rose-950 dark:text-rose-300";
+            }
+          }
+        })
+        .catch(error => {
+          if (btnSubmit) {
+            btnSubmit.disabled = false;
+            btnSubmit.innerHTML = `<i class="fa-regular fa-floppy-disk"></i> <span>Simpan Semua Perubahan</span>`;
+          }
+          if (statusAlert) {
+            statusAlert.innerText = "Koneksi simpan gagal: " + error.toString();
+            statusAlert.className = "block mt-4 p-4 rounded-xl text-sm bg-rose-100 text-rose-800 dark:bg-rose-950 dark:text-rose-300";
+          }
+        });
+    }
+
+    // ----------------------------------------------------
+    // MENJALANKAN FUNGSI AWAL SETELAH CAROUSEL LOAD
+    // ----------------------------------------------------
+    document.addEventListener("DOMContentLoaded", () => {
+      setTimeout(typeEffect, 1000);
+      inisialisasiPengaturanLokal();
+    });
+  </script>
+<script type="text/javascript">
+    // Menonaktifkan Klik Kanan
+    document.addEventListener('contextmenu', function(e) {
+        e.preventDefault();
+    });
+
+    // Menonaktifkan Shortcut Keyboard (F12, Ctrl+Shift+I, Ctrl+U)
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'F12' || 
+            (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'C')) || 
+            (e.ctrlKey && e.key === 'u')) {
+            e.preventDefault();
+        }
+    });
+</script>
+</body>
+</html>
